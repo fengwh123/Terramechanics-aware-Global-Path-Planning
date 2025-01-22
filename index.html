@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="End-to-End navigation (description).">
+  <meta name="keywords" content="End-to-End, Reinforcement learning, planetary exploration rover">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learning-based End-to-End Autonomous Navigation for Planetary Rovers Considering Non-Geometric Locomotion
+    Hazards</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/HIT.JPG">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <style>
+    /* 设置图片容器的样式 */
+    .image-container {
+        display: flex;           /* 使用弹性盒子模型 */
+        justify-content: space-around; /* 图片之间有间距 */
+        align-items: center;     /* 垂直居中对齐 */
+        padding: 10px 100px;      /* 上下50px，左右20px 的内边距 */
+        
+    }
+
+    /* 设置每个图片的样式 */
+    .image-container img {
+        width: 30%;          /* 每张图片的最大宽度为容器宽度的30% */
+        height: auto;            /* 保持图片原始比例 */
+    }
+</style>
+</head>
+
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Terrain-Aware Global Path Planning for Planetary Vehicles with Moving Direction Constraints</h1>
+            <!-- <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a>Wenhao Feng</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a>Liang Ding</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a>Ruyi Zhou</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a>Chongfu Xu</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a>Huaiguang Yang</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a>Haibo Gao</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a>Guangjun Liu</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a>Zongquan Deng</a><sup>1</sup>
+              </span>
+            </div> -->
+
+            <!-- <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>State Key Laboratory of Robotics and Systems, Harbin Institute of
+                Technology,</span>
+              <span class="author-block"><sup>2</sup>Department of Aerospace Engineering, Toronto Metropolitan
+                University</span>
+            </div> -->
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <!-- Video Link. -->
+                <!-- href="https://www.youtube.com/watch?v=MrKrnHhk8IA" -->
+                <span class="link-block">
+                  <a class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code (Comming soon)</span>
+                  </a>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="image-container">
+    <!-- 第一幅GIF -->
+    <img src="figures/slip.gif" alt="">
+    <!-- 第二幅GIF -->
+    <img src="figures/slip2.gif" alt="">
+    <!-- 第三幅GIF -->
+    <img src="figures/sideslip.gif" alt="">
+  </div>
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Overview</h2>
+          <div class="content has-text-justified">
+            <p>
+              Global path planning serves as a critical foundation for planetary vehicles to carry out long-distance exploration missions. When navigating through soft and unstructured extraterrestrial environments, planetary vehicles encounter numerous challenges, with significant risks including wheel slippage and sideslip. These risks are not only contingent upon the geometry and mechanical properties of the terrain but are also influenced by the vehicle's movement behavior. To accurately evaluate the traversability of extensive terrains and chart a path that is both safe and efficient for planetary rovers, this paper proposes a novel global path planning method. This method is based on an explicit wheel-soil interaction model, which integrates the terrain geometry, soil mechanical properties, and vehicle's driving directions to construct a multi-layered traversability map. The proposed approach also features online replanning capabilities, enabling the updating of the traversability map under conditions of limited data, thus ensuring the flexibility and responsiveness of path planning.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paper video. -->
+      <!-- <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Video</h2>
+          <div class="publication-video">
+            <iframe src="https://www.youtube.com/embed/i0MqO15AWqs" frameborder="0" allow="autoplay; encrypted-media"
+              allowfullscreen></iframe>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Method. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-five-sixths">
+          <h2 class="title is-3">Methodology</h2>
+          <div class="content has-text-justified">
+            <p>
+              The global path planning method proposed in this study is divided into two primary phases: offline global path planning and online path replanning. During the offline planning phase, the method estimates potential wheel slip ratio and sideslip angle by integrating three critical components—the terrain surface normal vector, the wheel-soil interaction model, and the vehicle's driving directions. These elements contribute to the assessment of terrain traversability, and lead to the generation of a precomputed traversability map, which serves as the foundation for subsequent global path planning. This phase leverages detailed analysis to predict vehicle behavior across diverse terrains, ensuring that initial paths are optimized for safety and efficiency.
+              In the online phase, the method addresses the inherent uncertainties in the initial parameter estimates of the ABTM by continuously acquiring data during the planetary vehicle's traversal. Online parameter estimation and high-slip detection are integrated in this method,  facilitating  dynamic refinement of the traversability map. Consequently, the global path planning remains responsive to actual driving conditions and environmental variations, enabling immediate adjustments that enhance the vehicle's adaptability in complex terrains.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="container" , align="center" style="margin-top: 20px; margin-bottom: 20px">
+        <img src="figures/framework.jpg" style="width: 95%;" alt="">
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Results. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-five-sixths">
+          <h2 class="title is-3">Simulation Experiments</h2>
+        </div>
+      </div>
+      <div class="columns is-centered has-text-centered" style="margin-top: 20px; margin-bottom: 20px">
+        <p></p>
+        <h2 class="title is-4">Quantitative Results</h2>
+      </div>
+      <div class="container" , align="center" style="margin-top: 12px; margin-bottom: 32px">
+        <img src="figures/Table_3.png" style="width: 95%;" alt="">
+      </div>
+      <div class="container" , align="center" style="margin-top: 12px; margin-bottom: 32px">
+        <img src="figures/Table_4.png" style="width: 55%;" alt="">
+      </div>
+      <div class="content has-text-justified" style="margin-top: 12px; margin-bottom: 32px">
+        <p>
+          Extensive validation through high-fidelity simulations have demonstrated superior comprehensive performance of the proposed method compared to existing methods, especially in terms of path execution success rates and execution efficiency.
+        </p>
+        <p>
+          <li><strong>Solved rate (Sol.) [%]</strong> is defined as the percentage of test instances for which a feasible path is successfully generated.</li>
+          <li><strong>Computation time (t<sub>comput</sub>) [s]</strong> includes the time for terrain traversability map calculation and the time for the path search process.</li>
+          <li><strong>Average path length (L<sub>mean</sub>) [m]</strong> represents the mean length of all successfully planned paths.</li>
+          <li><strong>Success rate (Succ.) [%]</strong> refers to the proportion of attempts that successfully reached the goal of the rover when following the planned paths.</li>
+          <li><strong>Execution time (t<sub>execut</sub>) [s]</strong> expresses the actual traversal time along the successfully executed paths.</li>
+        </p>
+      </div>
+    </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-4">Offline Path Planning Comparisons</h2>
+          <div class="publication-video">
+            <iframe src="https://www.youtube.com/embed/hILbOFJb4JQ" frameborder="0" allow="autoplay; encrypted-media"
+              allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-4">Online Path Replanning Comparisons</h2>
+          <div class="publication-video">
+            <iframe src="https://www.youtube.com/embed/T8UzCHawCkM" frameborder="0" allow="autoplay; encrypted-media"
+              allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Here</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
